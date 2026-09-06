@@ -48,6 +48,7 @@ export default function ProductModal({ product, onClose, currentUser }) {
   const [description, setDescription] = useState(product.description || '')
   const [tags, setTags] = useState(product.tags || [])
   const [tagInput, setTagInput] = useState('')
+  const [sourceLink, setSourceLink] = useState(product.source_link || '')
   const [mediaFiles, setMediaFiles] = useState(product.media_files || [])
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -65,6 +66,7 @@ export default function ProductModal({ product, onClose, currentUser }) {
         title,
         description,
         tags,
+        source_link: sourceLink,
         media_files: mediaFiles,
         updated_at: new Date().toISOString(),
         ...extra,
@@ -169,15 +171,30 @@ export default function ProductModal({ product, onClose, currentUser }) {
 
           {/* SOL — Medya */}
           <div className="space-y-4">
-            {product.source_link && (
-              <div className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-500 mb-1 font-medium">Kaynak Ürün</p>
-                <a href={product.source_link} target="_blank" rel="noreferrer"
-                  className="text-sm text-rose-500 hover:text-rose-700 underline break-all">
-                  🔗 {product.source_link}
-                </a>
+            {/* Referans Link - düzenlenebilir */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">🔗 Referans Link</label>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={sourceLink}
+                  onChange={e => setSourceLink(e.target.value)}
+                  placeholder="https://www.etsy.com/listing/..."
+                  className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-400"
+                />
+                {sourceLink && (
+                  <a
+                    href={sourceLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl text-sm transition-colors"
+                    title="Linki aç"
+                  >
+                    ↗
+                  </a>
+                )}
               </div>
-            )}
+            </div>
 
             <div>
               <div className="flex items-center justify-between mb-2">
